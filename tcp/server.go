@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/gzjjyz/logger"
 	"github.com/gzjjyz/netlib/agent"
-	"github.com/gzjjyz/netlib/log"
 	"github.com/gzjjyz/netlib/protocol"
 )
 
@@ -77,7 +77,7 @@ func (s *Server) run() {
 					delay = time.Second
 				}
 
-				log.Logger.LogError("accept error: %v; retrying in %v", err, delay)
+				logger.LogError("accept error: %v; retrying in %v", err, delay)
 				time.Sleep(delay)
 				continue
 			}
@@ -87,7 +87,7 @@ func (s *Server) run() {
 
 		if !s.connSet.add(conn) {
 			conn.Close()
-			log.Logger.LogError("[%s] accept error: too many connections", s.opt.ServerName)
+			logger.LogError("[%s] accept error: too many connections", s.opt.ServerName)
 			continue
 		}
 
@@ -96,7 +96,7 @@ func (s *Server) run() {
 		if err != nil {
 			conn.Close()
 			s.connSet.remove(conn)
-			log.Logger.LogError("[%s] accept error: create a failed. %v", s.opt.ServerName, err)
+			logger.LogError("[%s] accept error: create a failed. %v", s.opt.ServerName, err)
 			continue
 		}
 
@@ -119,13 +119,13 @@ func (s *Server) serveConn(conn net.Conn, tcpConn *Conn, agent agent.Agent) {
 	for {
 		msg, err := s.msgParser.Decode(conn)
 		if err != nil {
-			log.Logger.LogError("read message error %v", err)
+			logger.LogError("read message error %v", err)
 			break
 		}
 
 		err = agent.OnReceive(msg)
 		if err != nil {
-			log.Logger.LogError("receive message error %v", err)
+			logger.LogError("receive message error %v", err)
 			break
 		}
 	}

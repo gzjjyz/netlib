@@ -4,7 +4,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/gzjjyz/netlib/log"
+	"github.com/gzjjyz/logger"
 )
 
 type Conn struct {
@@ -66,7 +66,7 @@ func (c *Conn) Write(b []byte) {
 
 func (c *Conn) write(b []byte) {
 	if len(c.w) == cap(c.w) {
-		log.Logger.LogError("close conn. channel is full")
+		logger.LogError("close conn. channel is full")
 		return
 	}
 	c.w <- b
