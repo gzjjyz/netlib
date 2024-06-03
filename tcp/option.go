@@ -2,6 +2,7 @@ package tcp
 
 import (
 	"github.com/gzjjyz/netlib/agent"
+	"time"
 )
 
 type Options struct {
@@ -20,6 +21,9 @@ type Options struct {
 	// max write channel capacity
 	// default 1024
 	MaxWriteChannelCap int
+	// connect interval
+	ConnectInterval time.Duration
+	AutoReconnect   bool
 }
 
 func (opt *Options) init() {
