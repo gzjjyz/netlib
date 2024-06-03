@@ -96,7 +96,7 @@ func (s *Server) run() {
 		if err != nil {
 			conn.Close()
 			s.connSet.remove(conn)
-			logger.LogError("[%s] accept error: create a failed. %v", s.opt.ServerName, err)
+			logger.LogError("[%s] accept error: create agent failed. %v", s.opt.ServerName, err)
 			continue
 		}
 
@@ -129,7 +129,6 @@ func (s *Server) serveConn(conn net.Conn, tcpConn *Conn, agent agent.Agent) {
 			break
 		}
 	}
-
 }
 
 type connSet struct {
