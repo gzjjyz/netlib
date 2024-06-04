@@ -1,13 +1,14 @@
 package tcp
 
 import (
-	"github.com/gzjjyz/logger"
-	"github.com/gzjjyz/netlib/agent"
-	"github.com/gzjjyz/netlib/protocol"
 	"net"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/gzjjyz/logger"
+	"github.com/gzjjyz/netlib/agent"
+	"github.com/gzjjyz/netlib/protocol"
 )
 
 type Client struct {

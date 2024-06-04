@@ -4,13 +4,13 @@ import (
 	"encoding/binary"
 )
 
-// SerializeType defines serialization type of data.
+// SerializeType defines serialization type of Payload.
 type SerializeType byte
 
 const (
 	// SerializeNone uses raw []byte and don't serialize/deserialize
 	SerializeNone SerializeType = iota
-	// ProtoBuffer for data.
+	// ProtoBuffer for Payload.
 	ProtoBuffer
 )
 
@@ -26,7 +26,7 @@ const (
 
 type Message struct {
 	*Header
-	data []byte
+	Payload []byte
 }
 
 func NewMessage() *Message {
@@ -75,4 +75,11 @@ func (h *Header) DataLen() uint32 {
 
 func (h *Header) SetDataLen(l uint32) {
 	binary.BigEndian.PutUint32(h[4:8], l)
+}
+
+func (m *Message) Encode() []byte {
+	data := make([]byte, len(m.Payload)+8)
+	copy(data, m.Header[:])
+	copy(data[8:], m.Payload)
+	return data
 }

@@ -10,12 +10,14 @@ var (
 )
 
 type Parser struct {
-	maxMsgLen uint32
+	maxMessageSize uint32       // max message size
+	compressSize   int          // start compress size
+	compressType   CompressType // compress type
 }
 
 func NewParser(maxMsgLen uint32) *Parser {
 	return &Parser{
-		maxMsgLen: maxMsgLen,
+		maxMessageSize: maxMsgLen,
 	}
 }
 
@@ -28,13 +30,13 @@ func (p *Parser) Decode(r io.Reader) (*Message, error) {
 	}
 
 	l := m.DataLen()
-	if p.maxMsgLen > 0 && l > p.maxMsgLen {
+	if p.maxMessageSize > 0 && l > p.maxMessageSize {
 		return nil, ErrMessageTooLong
 	}
 
-	m.data = make([]byte, l)
+	m.Payload = make([]byte, l)
 
-	_, err = io.ReadFull(r, m.data)
+	_, err = io.ReadFull(r, m.Payload)
 	if err != nil {
 		return nil, err
 	}
