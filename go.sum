@@ -2,9 +2,13 @@ github.com/995933447/simpletrace v0.0.0-20230217061256-c25a914bd376 h1:hIHav2TTY
 github.com/995933447/simpletrace v0.0.0-20230217061256-c25a914bd376/go.mod h1:Kh2+nE3eCIOSIwSo8Sxj/MbWt1KPMJJz+9SHptuYr6s=
 github.com/995933447/stringhelper-go v0.0.0-20221220072216-628db3bc29d8 h1:q37SO0GTj/dk35jov187h3CACffZle6KjVzgGOrLkBM=
 github.com/995933447/stringhelper-go v0.0.0-20221220072216-628db3bc29d8/go.mod h1:cwkwj1/zndmaLbRYgQqy6qwY/ITAiEMdR+1BGssgXik=
+github.com/gorilla/websocket v1.5.1 h1:gmztn0JnHVt9JZquRuzLw3g4wouNVzKL15iLr/zn/QY=
+github.com/gorilla/websocket v1.5.1/go.mod h1:x3kM2JMyaluk02fnUJpQuwD2dCS5NDG2ZHL0uE0tcaY=
 github.com/gzjjyz/logger v1.0.8 h1:HxgLdz4cGjXfEIdvfKndOUeBoGyT2kYcvqt95/ZJGZ8=
 github.com/gzjjyz/logger v1.0.8/go.mod h1:ZIYBhjqMSuVskX/xoSBS+fSpVv6AyFCtmhUNgSj/aoI=
 github.com/gzjjyz/trace v0.0.0-20230831064247-64e42e91ac5d h1:PTnoIySa/HfBhvpT+S0AehoMGpiT+BTQF+xomG1ypkQ=
 github.com/gzjjyz/trace v0.0.0-20230831064247-64e42e91ac5d/go.mod h1:FOo0hrIPxyN2/x/MYlMKng+N+Wh+HehilHVHugYpNH4=
 github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b h1:vab8deKC4QoIfm9fJM59iuNz1ELGsuLoYYpiF+pHiG8=
 github.com/petermattis/goid v0.0.0-20230808133559-b036b712a89b/go.mod h1:pxMtw7cyUw6B2bRH0ZBANSPg+AoSud1I1iyJHI69jH4=
+golang.org/x/net v0.17.0 h1:pVaXccu2ozPjCXewfr1S7xza/zcXTity9cCdXQYSjIM=
+golang.org/x/net v0.17.0/go.mod h1:NxSsAGuq816PNPmqtQdLE42eU2Fs7NoRIZrHJAlaCOE=
