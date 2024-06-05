@@ -3,7 +3,6 @@ package tcp
 import (
 	"net"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	"github.com/gzjjyz/logger"
@@ -15,7 +14,7 @@ type Client struct {
 	opt       *Options
 	conn      net.Conn
 	msgParser *protocol.Parser
-	close     atomic.Bool
+	close     bool
 	wait      sync.WaitGroup
 	lock      sync.Mutex
 }
@@ -44,7 +43,11 @@ func (c *Client) Close() {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
-	c.close.Store(true)
+	if c.close {
+		return
+	}
+	c.close = true
+
 	c.conn.Close()
 
 	c.wait.Wait()
@@ -55,7 +58,6 @@ func (c *Client) init() error {
 		c.opt.ConnectInterval = time.Second
 		logger.LogInfo("invalid ConnectInterval, reset to %v", c.opt.ConnectInterval)
 	}
-	c.close.Store(false)
 
 	return nil
 }
@@ -63,7 +65,7 @@ func (c *Client) init() error {
 func (c *Client) dial() net.Conn {
 	for {
 		conn, err := net.Dial("tcp", c.opt.Addr)
-		if err == nil || c.close.Load() {
+		if err == nil || c.close {
 			return conn
 		}
 
@@ -82,12 +84,13 @@ reconnect:
 		return
 	}
 
-	if c.close.Load() {
+	c.lock.Lock()
+	if c.close {
+		c.lock.Unlock()
 		conn.Close()
 		return
 	}
 
-	c.lock.Lock()
 	c.conn = conn
 	c.lock.Unlock()
 
@@ -107,6 +110,9 @@ reconnect:
 }
 
 func (c *Client) serveConn(conn net.Conn, tcpConn *Conn, agent agent.Agent) {
+	defer func() {
+		agent.OnClose()
+	}()
 	tcpConn.init(conn, c.opt.MaxWriteChannelCap)
 
 	agent.OnOpen()
