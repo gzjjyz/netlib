@@ -1,4 +1,4 @@
-package network
+package netlib
 
 import (
 	"github.com/gzjjyz/netlib/log"
