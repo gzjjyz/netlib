@@ -120,13 +120,20 @@ func (server *TCPServer) run() {
 			log.Debug("too many connections")
 			continue
 		}
+
+		tcpConn := newTCPConn(conn, server.WriteChanCap, server.msgParser)
+		agent := server.NewAgent(tcpConn)
+		if nil == agent {
+			server.mutexConns.Unlock()
+			tcpConn.Close()
+			continue
+		}
+
 		server.conns[conn] = struct{}{}
 		server.mutexConns.Unlock()
 
 		server.wgConns.Add(1)
 
-		tcpConn := newTCPConn(conn, server.WriteChanCap, server.msgParser)
-		agent := server.NewAgent(tcpConn)
 		go func() {
 			agent.Run()
 
