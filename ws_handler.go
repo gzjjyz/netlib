@@ -67,11 +67,17 @@ func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		log.Error("too many connections")
 		return
 	}
-	handler.conns[conn] = struct{}{}
-	handler.mutexConns.Unlock()
 
 	wsConn := newWSConn(conn, opts.WriteChanCap, opts.MaxMsgLen)
 	agent := opts.NewAgent(wsConn)
+	if agent == nil {
+		handler.mutexConns.Unlock()
+		wsConn.Close()
+		return
+	}
+	handler.conns[conn] = struct{}{}
+	handler.mutexConns.Unlock()
+
 	agent.Run()
 
 	// cleanup
