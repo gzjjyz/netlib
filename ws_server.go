@@ -11,7 +11,7 @@ import (
 )
 
 type WSServer struct {
-	opts        *wsOptions
+	opts        *WSOptions
 	addr        string
 	httpTimeout time.Duration
 	ln          net.Listener
@@ -21,7 +21,7 @@ type WSServer struct {
 func NewWSServer(
 	address string,
 	timeout time.Duration,
-	opts *wsOptions,
+	opts *WSOptions,
 ) (*WSServer, error) {
 	if err := opts.Validation(); err != nil {
 		return nil, err

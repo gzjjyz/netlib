@@ -8,14 +8,14 @@ import (
 	"sync"
 )
 
-type wsOptions struct {
+type WSOptions struct {
 	MaxConnNum   int
 	WriteChanCap int
 	MaxMsgLen    uint32
 	NewAgent     func(*WSConn) Agent
 }
 
-func (opt *wsOptions) Validation() error {
+func (opt *WSOptions) Validation() error {
 	if opt.MaxConnNum <= 0 {
 		return errors.New("invalid MaxConnNum")
 	}
@@ -35,7 +35,7 @@ func (opt *wsOptions) Validation() error {
 }
 
 type WSHandler struct {
-	opts       *wsOptions
+	opts       *WSOptions
 	upgrader   websocket.Upgrader
 	conns      WebsocketConnSet
 	mutexConns sync.Mutex
