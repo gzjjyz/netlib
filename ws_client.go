@@ -40,6 +40,7 @@ func NewWSClient(
 	client.HandshakeTimeout = handshakeTimeout
 
 	client.closeFlag.Store(false)
+	client.NewAgent = newAgentHandler
 
 	return client, nil
 }
