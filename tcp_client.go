@@ -109,6 +109,10 @@ reconnect:
 
 	tcpConn := newTCPConn(conn, client.WriteChanCap, client.msgParser)
 	agent := client.NewAgent(tcpConn)
+	if agent == nil {
+		tcpConn.Close()
+		return
+	}
 	agent.Run()
 
 	// cleanup
