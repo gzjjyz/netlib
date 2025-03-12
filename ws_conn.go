@@ -2,6 +2,7 @@ package netlib
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gzjjyz/netlib/log"
 	"net"
 	"sync"
@@ -114,7 +115,7 @@ func (wsConn *WSConn) WriteMsg(args ...[]byte) error {
 
 	// check len
 	if msgLen > wsConn.maxMsgLen {
-		return errors.New("message too long")
+		return fmt.Errorf("message too long, exceeded specified limit %d", wsConn.maxMsgLen)
 	} else if msgLen < 1 {
 		return errors.New("message too short")
 	}

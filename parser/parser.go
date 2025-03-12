@@ -8,7 +8,7 @@ package parser
 
 import (
 	"encoding/binary"
-	"errors"
+	"fmt"
 	"io"
 )
 
@@ -50,9 +50,9 @@ func (p *Parser) PackMsg(args ...[]byte) ([]byte, error) {
 
 	// check len
 	if msgLen > p.opts.MaxMsgLen {
-		return nil, errors.New("message too long")
+		return nil, fmt.Errorf("message too long, exceeded specified limit %d", p.opts.MaxMsgLen)
 	} else if msgLen < p.opts.MinMsgLen {
-		return nil, errors.New("message too short")
+		return nil, fmt.Errorf("message too short, exceeded specified limit %d", p.opts.MinMsgLen)
 	}
 
 	msg := make([]byte, uint32(p.opts.LenMsgLen)+msgLen)

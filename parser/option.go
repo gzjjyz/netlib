@@ -2,7 +2,6 @@ package parser
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -73,9 +72,9 @@ func (opt *Option) readMsgLen(reader io.Reader) (msgLen uint32, err error) {
 
 	// check len
 	if msgLen > opt.MaxMsgLen {
-		return 0, errors.New("message too long")
+		return 0, fmt.Errorf("message too long, exceeded specified limit %d", opt.MaxMsgLen)
 	} else if msgLen < opt.MinMsgLen {
-		return 0, errors.New("message too short")
+		return 0, fmt.Errorf("message too short， exceeded specified limit %d", opt.MinMsgLen)
 	}
 
 	return msgLen, nil
